@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-3">
+        {% include 'module/sideBar.html.twig' %}
+    </div>
+    <div class="col-md-9">
+        <div class="row justify-content-center">
+            <div class="py-5 text-center">
+                <h2>Module : {{ module.nomModule }}</h2>
+            </div>
+            {% set hasReleves = releves|length > 0 %}
+            <p>Etat :
+                {% if hasReleves %}
+                {% set dernierReleve = releves|last %}
+                <i class="bi bi-circle-fill {{ dernierReleve.etat ? 'text-success' : 'text-danger' }}"></i>
+                {% else %}
+                <i class="bi bi-circle-fill text-muted"></i>
+                {% endif %}
+            </p>
+            <p>Valeur:
+                {% if not hasReleves %}
+                Aucun relevé disponible
+                {% else %}
+                {% if dernierReleve.etat %}
+                {{ dernierReleve.valeur }}
+                {% else %}
+                Indisponible
+                {% endif %}
+                {% endif %}
+            </p>
+            <p>Unité / Mesure : {{ module.idUnite.nomUnite }}</p>
+            <p>Date du dernier relevé:
+                {% if releves|length > 0 %}
+                {{ dernierReleve.getDate|date('d-m-Y H:i:s') }}
+                {% else %}
+                Aucune date disponible
+                {% endif %}
+            </p>
+            <div>
+                <canvas id="chartModule"></canvas>
+                <div id="chartLabels" style="display: none;">{{ chartLabels }}</div>
+                <div id="chartData" style="display: none;">{{ chartData }}</div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-1 me-3">
+                    <a class="btn btn-lg btn-primary mt-3" href="{{ path('app_edit_module', {'id': module.idModule}) }}"
+                        role="button">Editer</a>
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-lg btn-secondary mt-3"
+                        href="{{ path('app_delete_module', {'id': module.idModule}) }}" role="button">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const chartLabels = {{ chartLabels| raw }};
+    const chartData = {{ chartData| raw }};
+</script>
+
+{% endblock %}

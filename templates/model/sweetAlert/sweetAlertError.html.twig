@@ -1,0 +1,9 @@
+{% for flash in app.flashes('sweetalert_error') %}
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: '{{ flash.message }}',
+            showConfirmButton: true,
+        });
+    </script>
+{% endfor %}

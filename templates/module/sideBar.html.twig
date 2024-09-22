@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
+        style="width: 280px; height: 80vh; overflow-y: auto;">
+        <h2 class="fs-4">Module</h2>
+        <hr>
+        <a href="{{ path('app_add_module') }}" class="btn btn-light w-100"><span class="bi bi-plus-circle"></span>
+            Ajouter un module</a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+
+            {% for module in listModules %}
+            <li class="nav-item">
+                <a href="{{ path('app_view_module', {id: module.idModule}) }}"
+                    class="nav-link btn btn-light link-body-emphasis text-decoration-none">
+                    {{ module.nomModule }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

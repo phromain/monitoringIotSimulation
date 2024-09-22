@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-3">
+        {% include 'module/sideBar.html.twig' %}
+    </div>
+    <div class="col-md-9">
+        <div class="row justify-content-center">
+            <div class="py-5 text-center">
+                <h2>{{ is_edit ? 'Editer un module' : 'Ajouter un module' }}</h2>
+            </div>
+            <div class="row g-5">
+                <main class="form-signin w-100 m-auto">
+                    {{ form_start(form_module) }}
+                    <div class="col-4 mb-3 mx-auto">
+                        <label class="form-label">Nom du module</label>
+                        {{ form_row(form_module.nomModule) }}
+                    </div>
+                    <div class="col-4 mb-3 mx-auto">
+                        <label class="form-label">Unité / Mesure</label>
+                        {{ form_row(form_module.idUnite) }}
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-1 me-4">
+                            {{ form_row(form_module.save) }}
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-lg btn-secondary mt-3" href="{{ path('app_module') }}"
+                                role="button">Retour</a>
+                        </div>
+                    </div>
+                    {{ form_end(form_module) }}
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
