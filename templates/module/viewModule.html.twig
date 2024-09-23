@@ -58,8 +58,12 @@
 </div>
 
 <script>
-    const chartLabels = {{ chartLabels| raw }};
-    const chartData = {{ chartData| raw }};
+    const chartLabels = {{ chartLabels|raw }};
+    const chartData = {{ chartData|raw }};
+
+    setInterval(function() {
+        location.reload();
+    }, 31000);
 </script>
 <script src="/asset/javascript/chartModule.js"></script>
 
