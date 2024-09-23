@@ -13,29 +13,29 @@
             {% set hasReleves = releves|length > 0 %}
             <p>Etat :
                 {% if hasReleves %}
-                {% set dernierReleve = releves|last %}
-                <i class="bi bi-circle-fill {{ dernierReleve.etat ? 'text-success' : 'text-danger' }}"></i>
-                {% else %}
+                    {% set dernierReleve = releves|last %}
+                        <i class="bi bi-circle-fill {{ dernierReleve.etat ? 'text-success' : 'text-danger' }}"></i>
+                    {% else %}
                 <i class="bi bi-circle-fill text-muted"></i>
                 {% endif %}
             </p>
             <p>Valeur:
                 {% if not hasReleves %}
                 Aucun relevé disponible
-                {% else %}
-                {% if dernierReleve.etat %}
-                {{ dernierReleve.valeur }}
-                {% else %}
-                Indisponible
-                {% endif %}
+                    {% else %}
+                        {% if dernierReleve.etat %}
+                            {{ dernierReleve.valeur }}
+                            {% else %}
+                                Indisponible
+                        {% endif %}
                 {% endif %}
             </p>
             <p>Unité / Mesure : {{ module.unite.nomUnite }}</p>
             <p>Date du dernier relevé:
                 {% if releves|length > 0 %}
-                {{ dernierReleve.getDate|date('d-m-Y H:i:s') }}
-                {% else %}
-                Aucune date disponible
+                    {{ dernierReleve.getDate|date('d-m-Y H:i:s') }}
+                    {% else %}
+                    Aucune date disponible
                 {% endif %}
             </p>
             <div>

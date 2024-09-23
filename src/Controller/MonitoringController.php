@@ -18,14 +18,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MonitoringController extends AbstractController
 {
     #[Route('/monitoring', name: 'app_monitoring')]
-    public function index(MonitoringEntityRepository $monitoringRepository): Response
+    public function index(MonitoringEntityRepository $monitoringRepository, ReleveEntityRepository $releveRepository): Response
     {
-
         $monitoringModules = $monitoringRepository->findAll();
 
+        // Récupérer les informations des modules associés
+        $modulesInfo = [];
+        foreach ($monitoringModules as $monitoringModule) {
+            $module = $monitoringModule->getModule();
+            $releves = $releveRepository->findByModuleId($module->getIdModule()); // Utiliser findByModuleId
+
+            usort($releves, function($a, $b) {
+                return $a->getDate() <=> $b->getDate();
+            });
+
+            $labels = array_map(fn($releve) => $releve->getDate()->format('H:i'), $releves);
+            $dataValues = array_map(fn($releve) => $releve->getValeur(), $releves);
+
+            $modulesInfo[] = [
+                'module' => $module,
+                'releves' => $releves,
+                'chartLabels' => json_encode($labels),
+                'chartData' => json_encode($dataValues)
+            ];
+        }
         return $this->render('monitoring/index.html.twig', [
             'controller_name' => 'MonitoringController',
             'monitoringModules' => $monitoringModules,
+            'modulesInfo' => $modulesInfo
         ]);
     }
 
@@ -47,6 +67,16 @@ class MonitoringController extends AbstractController
             try {
                 $module = $form_monitoring->get('module')->getData(); 
 
+                $existingMonitoringModule = $monitoringRepository->findOneBy(['module' => $module]);
+                if ($existingMonitoringModule) {
+                    $this->addFlash('sweetalert_warning', [
+                        'message' => 'Module déjà monitoré.'
+                    ]);
+                    return $this->render('monitoring/formMonitoring.html.twig', [
+                        'controller_name' => 'MonitoringController',
+                        'form_monitoring' => $form_monitoring->createView(),
+                    ]);
+                }
                 
                 $existingModule = $moduleRepository->find($module->getIdModule());
 
@@ -77,7 +107,7 @@ class MonitoringController extends AbstractController
     public function deleteMonitoring(int $id, MonitoringEntityRepository $monitoringRepository, EntityManagerInterface $manager): Response
     {
         try {
-            $monitoring = $monitoringRepository->find($id);
+            $monitoring = $monitoringRepository->findOneBy(['module' => $id]);
             if (!$monitoring) {
                 $this->addFlash('sweetalert_error', [
                     'message' => 'Monitoring non trouvé.'
