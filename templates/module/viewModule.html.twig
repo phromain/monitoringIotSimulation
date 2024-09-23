@@ -39,9 +39,7 @@
                 {% endif %}
             </p>
             <div>
-                <canvas id="chartModule"></canvas>
-                <div id="chartLabels" style="display: none;">{{ chartLabels }}</div>
-                <div id="chartData" style="display: none;">{{ chartData }}</div>
+                <canvas id="chartModule" data-chart-labels="{{ chartLabels|e('html_attr') }}" data-chart-data="{{ chartData|e('html_attr') }}"></canvas>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-1 me-3">
@@ -57,14 +55,6 @@
     </div>
 </div>
 
-<script>
-    const chartLabels = {{ chartLabels|raw }};
-    const chartData = {{ chartData|raw }};
-
-    setInterval(function() {
-        location.reload();
-    }, 31000);
-</script>
 <script src="/asset/javascript/chartModule.js"></script>
 
 {% endblock %}

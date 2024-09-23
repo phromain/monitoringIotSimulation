@@ -7,44 +7,66 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.error('Chart.js is not loaded');
     }
 
-    const ctx = document.getElementById('chartModule');
+    document.querySelectorAll('canvas[id^="chart-"], canvas[id="chartModule"]').forEach(canvas => {
+        const chartLabels = JSON.parse(canvas.getAttribute('data-chart-labels'));
+        const chartData = JSON.parse(canvas.getAttribute('data-chart-data'));
+        const ctx = canvas.getContext('2d');
 
-    const filteredData = chartData.filter(value => value !== null);
+        const filteredData = chartData.filter(value => value !== null);
 
-    // valeurs minimales et maximales réelles
-    const minValue = Math.min(...filteredData);
-    const maxValue = Math.max(...filteredData);
+        const minValue = Math.min(...filteredData);
+        const maxValue = Math.max(...filteredData);
 
-    // marge proportionnelle
-    let margin = (maxValue - minValue) * 0.1;
+        let margin = (maxValue - minValue) * 0.1;
 
-    // si toutes les valeurs sont identiques
-    if (minValue === maxValue) {
-        margin = maxValue * 0.1; 
-    }
+        if (minValue === maxValue) {
+            margin = maxValue * 0.1; 
+        }
 
-    // Définir les limites minimales et maximales
-    const minY = minValue - margin;
-    const maxY = maxValue + margin;
+        const minY = minValue - margin;
+        const maxY = maxValue + margin;
 
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: chartLabels,
-            datasets: [{
-                label: 'Mesure Module',
-                data: chartData,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    min: minY,
-                    max: maxY, 
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Mesure Module',
+                    data: chartData,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: minY,
+                        max: maxY, 
+                    }
                 }
             }
-        }
+        });
     });
+
+    // Vérifie l'état des modules 
+    function checkModuleStatus() {
+        let modulesInError = [];
+        document.querySelectorAll('canvas[id^="chart-"]').forEach(canvas => {
+            const dernierReleveEtat = canvas.getAttribute('data-dernier-releve-etat');
+            if (dernierReleveEtat === 'false') {
+                modulesInError.push(canvas.getAttribute('data-module-nom'));
+            }
+        });
+
+        if (modulesInError.length > 0) {
+            toastr.options.timeOut = 10000; 
+            toastr.error('Les modules suivants sont en erreur : ' + modulesInError.join(', '), 'Erreur de Module');
+        }
+    }
+
+    checkModuleStatus();
+
+    setInterval(function() {
+        location.reload();
+    }, 31000);
 });
