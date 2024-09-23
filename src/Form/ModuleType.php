@@ -18,7 +18,7 @@ class ModuleType extends AbstractType
     {
         $builder
             ->add('nomModule', TextType::class, ['attr'=> ['class' => 'form-control' ], 'label'=> false])
-            ->add('idUnite', EntityType::class, [
+            ->add('unite', EntityType::class, [
                 'class' => UniteEntity::class,
                 'query_builder' => function (UniteEntityRepository $er) {
                     return $er->createQueryBuilder('u')

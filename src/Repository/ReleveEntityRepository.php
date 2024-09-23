@@ -48,7 +48,7 @@ class ReleveEntityRepository extends ServiceEntityRepository
     public function findByModuleId(int $moduleId): array
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.id_module = :moduleId')
+            ->andWhere('r.module = :moduleId')
             ->setParameter('moduleId', $moduleId)
             ->orderBy('r.date', 'DESC')
             ->setMaxResults(10)

@@ -13,9 +13,9 @@ class ReleveEntity
     #[ORM\Column(type: 'integer')]
     private $id_releve;
 
-    #[ORM\ManyToOne(targetEntity: ModuleEntity::class)]
-    #[ORM\JoinColumn(name: 'id_module', referencedColumnName: 'id_module')]
-    private $id_module;
+    #[ORM\ManyToOne(targetEntity: ModuleEntity::class, fetch: "EAGER")]
+    #[ORM\JoinColumn(name: "id_module", referencedColumnName: "id_module", nullable: false)]
+    private $module;
 
     #[ORM\Column(type: 'float', nullable: true)]
     private $valeur;

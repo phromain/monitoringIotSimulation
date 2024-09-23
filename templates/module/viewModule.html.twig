@@ -30,7 +30,7 @@
                 {% endif %}
                 {% endif %}
             </p>
-            <p>Unité / Mesure : {{ module.idUnite.nomUnite }}</p>
+            <p>Unité / Mesure : {{ module.unite.nomUnite }}</p>
             <p>Date du dernier relevé:
                 {% if releves|length > 0 %}
                 {{ dernierReleve.getDate|date('d-m-Y H:i:s') }}
@@ -61,5 +61,6 @@
     const chartLabels = {{ chartLabels| raw }};
     const chartData = {{ chartData| raw }};
 </script>
+<script src="/asset/javascript/chartModule.js"></script>
 
 {% endblock %}

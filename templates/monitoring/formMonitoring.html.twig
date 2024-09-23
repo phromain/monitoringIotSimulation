@@ -1,32 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="row justify-content-center">
-            <div class="py-5 text-center">
-                <h2>Choisir un module</h2>
+
+<div class="row justify-content-center">
+    <div class="py-5 text-center">
+        <h2>Choisir un module</h2>
+    </div>
+    <div class="row g-5">
+        <main class="form-signin w-100 m-auto">
+            {{ form_start(form_monitoring) }}
+            <div class="col-4 mb-3 mx-auto">
+                <label class="form-label">Liste des modules</label>
+                {{ form_row(form_monitoring.module) }}
             </div>
-            <div class="row g-5">
-                <main class="form-signin w-100 m-auto">
-                    {{ form_start(form_monitoring) }}
-                    <div class="col-4 mb-3 mx-auto">
-                        <label class="form-label">Liste des modules</label>
-                        {{ form_row(form_monitoring.nomModule) }}
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-md-1 me-4">
-                            {{ form_row(form_monitoring.save) }}
-                        </div>
-                        <div class="col-md-1">
-                            <a class="btn btn-lg btn-secondary mt-3" href="{{ path('app_monitoring') }}"
-                                role="button">Retour</a>
-                        </div>
-                    </div>
-                    {{ form_end(form_monitoring) }}
-                </main>
+            <div class="row justify-content-center">
+                <div class="col-md-1 me-4">
+                    {{ form_row(form_monitoring.save) }}
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-lg btn-secondary mt-3" href="{{ path('app_monitoring') }}"
+                        role="button">Retour</a>
+                </div>
             </div>
-        </div>
+            {{ form_end(form_monitoring) }}
+        </main>
     </div>
 </div>
 {% endblock %}

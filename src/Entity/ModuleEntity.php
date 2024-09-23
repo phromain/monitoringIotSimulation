@@ -18,7 +18,8 @@ class ModuleEntity
 
     #[ORM\ManyToOne(targetEntity: UniteEntity::class, fetch: "EAGER")]
     #[ORM\JoinColumn(name: "id_unite", referencedColumnName: "id_unite", nullable: false)]
-    private $id_unite;
+    private $unite;
+    
 
     /**
      * Get the value of id_module
@@ -56,22 +57,20 @@ class ModuleEntity
         return $this;
     }
 
-    
-
     /**
-     * Get the value of id_unite
+     * Get the value of unite
      */
-    public function getIdUnite()
+    public function getUnite()
     {
-        return $this->id_unite;
+        return $this->unite; 
     }
 
     /**
-     * Set the value of id_unite
+     * Set the value of unite
      */
-    public function setIdUnite($id_unite): self
+    public function setUnite($unite): self
     {
-        $this->id_unite = $id_unite;
+        $this->unite = $unite; 
 
         return $this;
     }

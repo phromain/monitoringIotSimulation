@@ -13,8 +13,8 @@ class MonitoringEntity
     #[ORM\Column(type: 'integer')]
     private $id_monitoring_module;
 
-    #[ORM\ManyToOne(targetEntity: ModuleEntity::class)]
-    #[ORM\JoinColumn(name: 'id_module', referencedColumnName: 'id_module')]
+    #[ORM\ManyToOne(targetEntity: ModuleEntity::class, fetch: "EAGER")]
+    #[ORM\JoinColumn(name: "id_module", referencedColumnName: "id_module", nullable: false)]
     private $module;
 
     /**

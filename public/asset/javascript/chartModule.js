@@ -1,6 +1,12 @@
-
+console.log('chartModule.js is loaded');
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    if (typeof Chart !== 'undefined') {
+        console.log('Chart.js is loaded');
+    } else {
+        console.error('Chart.js is not loaded');
+    }
+
     const ctx = document.getElementById('chartModule');
 
     const filteredData = chartData.filter(value => value !== null);
