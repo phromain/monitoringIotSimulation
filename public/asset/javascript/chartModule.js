@@ -1,11 +1,11 @@
 console.log('chartModule.js is loaded');
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    if (typeof Chart !== 'undefined') {
+/*     if (typeof Chart !== 'undefined') {
         console.log('Chart.js is loaded');
     } else {
         console.error('Chart.js is not loaded');
-    }
+    } */
 
     document.querySelectorAll('canvas[id^="chart-"], canvas[id="chartModule"]').forEach(canvas => {
         const chartLabels = JSON.parse(canvas.getAttribute('data-chart-labels'));
