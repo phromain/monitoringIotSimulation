@@ -68,5 +68,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     setInterval(function() {
         location.reload();
-    }, 31000);
+    }, 86401000);
 });

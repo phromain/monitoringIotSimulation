@@ -24,11 +24,12 @@
                     </div>
                 </div>
                 <div>
-                    <canvas id="chart-{{ moduleInfo.module.idModule }}" 
-                            data-chart-labels="{{ moduleInfo.chartLabels|e('html_attr') }}" 
-                            data-chart-data="{{ moduleInfo.chartData|e('html_attr') }}"
-                            data-dernier-releve-etat="{{ dernierReleve.etat ? 'true' : 'false' }}"
-                            data-module-nom="{{ moduleInfo.module.nomModule }}"></canvas>
+                    <canvas id="chart-{{ moduleInfo.module.idModule }}"
+                        data-chart-labels="{{ moduleInfo.chartLabels|e('html_attr') }}"
+                        data-chart-data="{{ moduleInfo.chartData|e('html_attr') }}"
+                        data-dernier-releve-etat="{% if dernierReleve is defined and dernierReleve.etat is not empty %}{{ dernierReleve.etat ? 'true' : 'false' }}{% else %}'vide'{% endif %}"
+                        data-module-nom="{{ moduleInfo.module.nomModule }}">
+                    </canvas>
                 </div>
             </div>
         </div>

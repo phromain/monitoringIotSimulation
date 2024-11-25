@@ -42,4 +42,4 @@ function fetchModulesAndGenerateData() {
 }
 
 
-setInterval(fetchModulesAndGenerateData, 30000); 
+setInterval(fetchModulesAndGenerateData, 86400000); 
